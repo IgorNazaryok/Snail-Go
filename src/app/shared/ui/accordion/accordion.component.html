@@ -1,0 +1,28 @@
+<div class="accordion">
+  @for (item of items(); track item.title; let index = $index) {
+    <section class="accordion__item">
+      <button
+        class="accordion__trigger"
+        type="button"
+        [id]="accordionId + '-trigger-' + index"
+        (click)="toggle(index)"
+        (keydown)="onTriggerKeydown($event, index)"
+        [attr.aria-expanded]="openIndex() === index"
+        [attr.aria-controls]="accordionId + '-panel-' + index"
+      >
+        <span>{{ item.title }}</span>
+        <span>{{ openIndex() === index ? '−' : '+' }}</span>
+      </button>
+      @if (openIndex() === index) {
+        <div
+          class="accordion__content"
+          role="region"
+          [id]="accordionId + '-panel-' + index"
+          [attr.aria-labelledby]="accordionId + '-trigger-' + index"
+        >
+          <p>{{ item.content }}</p>
+        </div>
+      }
+    </section>
+  }
+</div>

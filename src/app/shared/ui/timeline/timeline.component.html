@@ -1,0 +1,24 @@
+<ol class="timeline">
+  @for (step of steps(); track step.id) {
+    <li class="timeline__item">
+      <div class="timeline__marker">
+        <span class="timeline__marker-order">{{ step.order }}</span>
+        @if (step.icon) {
+          <span class="timeline__marker-icon" aria-hidden="true">{{ step.icon }}</span>
+        }
+      </div>
+      <div class="timeline__content">
+        <div class="timeline__meta">
+          <div>
+            <h3>{{ step.title }}</h3>
+            @if (step.timeLabel) {
+              <p class="timeline__time">{{ step.timeLabel }}</p>
+            }
+          </div>
+          <span>{{ step.durationMinutes }} хв</span>
+        </div>
+        <p>{{ step.description }}</p>
+      </div>
+    </li>
+  }
+</ol>

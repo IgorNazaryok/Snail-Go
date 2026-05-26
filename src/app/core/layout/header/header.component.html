@@ -1,0 +1,34 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" routerLink="/" (click)="closeMenu()">
+      <span class="site-header__brand-mark">Snail Go</span>
+      <span class="site-header__brand-text">гастромаршрут равликових ферм</span>
+    </a>
+
+    <button
+      class="site-header__burger"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="isMenuOpen()"
+      aria-label="Відкрити меню"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="site-header__nav" [class.site-header__nav--open]="isMenuOpen()">
+      @for (item of navItems; track item.path) {
+        <a
+          class="site-header__link"
+          [routerLink]="item.path"
+          routerLinkActive="site-header__link--active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+          (click)="closeMenu()"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+  </div>
+</header>

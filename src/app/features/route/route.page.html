@@ -1,0 +1,38 @@
+<section class="section section--tight">
+  <div class="container">
+    <app-section-header
+      eyebrow="Маршрут"
+      title="Хронологія поїздки без перевантаженої карти"
+      description="Маршрут базується на матеріалах курсової: виїзд із Дніпра, візит до села Сурсько-Михайлівка, екскурсія, дегустація та контактні активності на території ферми."
+    />
+
+    <div class="route-board surface-card">
+      <img src="assets/illustrations/route-board.svg" alt="Схематична ілюстрація маршруту поїздки" />
+      <div class="route-board__legend">
+        @for (item of routeLegend; track item.id) {
+          <div class="route-board__legend-item">
+            <span aria-hidden="true">{{ item.icon }}</span>
+            <strong>{{ item.title }}</strong>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="surface-card route-summary">
+      <div>
+        <span>Маршрут</span>
+        <strong>м. Дніпро, вул. Панікахи, 19 → с. Сурсько-Михайлівка, вул. Польова, 55</strong>
+      </div>
+      <div>
+        <span>Сезон</span>
+        <strong>1 березня - 31 жовтня</strong>
+      </div>
+      <div>
+        <span>Мета</span>
+        <strong>Зрозуміти цикл ферми та отримати дегустаційний досвід</strong>
+      </div>
+    </div>
+
+    <app-timeline [steps]="steps" />
+  </div>
+</section>

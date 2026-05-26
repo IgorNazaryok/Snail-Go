@@ -1,0 +1,136 @@
+@if (farm(); as farmData) {
+  <section class="section section--tight">
+    <div class="container">
+      <a class="back-link" routerLink="/farms">← До всіх ферм</a>
+
+      <div class="farm-hero">
+        <div>
+          <p class="farm-hero__eyebrow">{{ farmData.status }} · {{ farmData.location }}</p>
+          <h1>{{ farmData.name }}</h1>
+          <p class="farm-hero__lead">{{ farmData.fullDescription }}</p>
+
+          <div class="farm-hero__badge-row">
+            <span class="farm-hero__badge">{{ farmData.badge }}</span>
+            <span class="farm-hero__badge">{{ farmData.species }}</span>
+          </div>
+
+          <div class="farm-metrics">
+            <article class="surface-card farm-metrics__item">
+              <span>Вид</span>
+              <strong>{{ farmData.species }}</strong>
+            </article>
+            <article class="surface-card farm-metrics__item">
+              <span>Масштаб</span>
+              <strong>{{ farmData.scale }}</strong>
+            </article>
+            @if (farmData.foundedYear) {
+              <article class="surface-card farm-metrics__item">
+                <span>Заснування</span>
+                <strong>{{ farmData.foundedYear }}</strong>
+              </article>
+            }
+          </div>
+        </div>
+
+        <aside class="surface-card farm-summary">
+          <img class="farm-summary__image" [src]="farmData.image" [alt]="farmData.imageAlt" loading="lazy" />
+          <div class="farm-summary__content">
+            <h2>Формат візиту</h2>
+            <ul>
+              @for (activity of farmData.activities; track activity) {
+                <li>{{ activity }}</li>
+              }
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Розділи про ферму">
+        @for (tab of tabs; track tab.id) {
+          <button
+            type="button"
+            class="tabs__button"
+            role="tab"
+            [id]="'tab-' + tab.id"
+            [attr.aria-selected]="activeTab() === tab.id"
+            [attr.aria-controls]="'panel-' + tab.id"
+            [attr.tabindex]="activeTab() === tab.id ? 0 : -1"
+            [class.tabs__button--active]="activeTab() === tab.id"
+            (click)="setTab(tab.id)"
+            (keydown)="onTabKeydown($event, tab.id)"
+          >
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+
+      <div
+        class="surface-card farm-panel"
+        role="tabpanel"
+        [id]="'panel-' + activeTab()"
+        [attr.aria-labelledby]="'tab-' + activeTab()"
+      >
+        @if (activeTab() === 'overview') {
+          <div class="farm-panel__grid">
+            <div>
+              <h3>Умови утримання</h3>
+              <ul>
+                @for (item of farmData.conditions; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+            <div>
+              <h3>Мікроклімат і цикл</h3>
+              <ul>
+                @for (item of farmData.microclimate; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+            <div>
+              <h3>Активності</h3>
+              <ul>
+                @for (item of farmData.activities; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+            <div>
+              <h3>Цільові групи</h3>
+              <ul>
+                @for (item of farmData.audiences; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+
+        @if (activeTab() === 'cycle') {
+          <ol class="farm-list">
+            @for (item of farmData.cycleStages; track item) {
+              <li>{{ item }}</li>
+            }
+          </ol>
+        }
+
+        @if (activeTab() === 'facts') {
+          <ul class="farm-list">
+            @for (item of farmData.facts; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+  </section>
+} @else {
+  <section class="section">
+    <div class="container">
+      <h1>Ферму не знайдено</h1>
+      <p>Перевірте посилання або поверніться до списку локацій.</p>
+      <a class="button button--secondary" routerLink="/farms">Назад до ферм</a>
+    </div>
+  </section>
+}

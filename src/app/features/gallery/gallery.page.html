@@ -1,0 +1,68 @@
+<section class="section section--accent">
+  <div class="container">
+    <app-section-header
+      eyebrow="Галерея"
+      title="Страви та дегустаційні позиції"
+      description="Поки без складної медіагалереї: фокус на картках, коротких описах і модальному перегляді деталей."
+    />
+
+    <div class="card-grid card-grid--3">
+      @for (dish of dishes; track dish.id) {
+        <button
+          class="dish-card"
+          type="button"
+          (click)="openDishFromEvent(dish, $event)"
+          [attr.aria-haspopup]="'dialog'"
+          [attr.aria-expanded]="selectedDish()?.id === dish.id"
+          [attr.aria-controls]="selectedDish()?.id === dish.id ? 'dish-dialog-' + dish.id : null"
+        >
+          <span class="dish-card__name">{{ dish.name }}</span>
+          <span class="dish-card__description">{{ dish.shortDescription }}</span>
+        </button>
+      }
+    </div>
+
+    @if (selectedDish(); as dish) {
+      <div class="modal-backdrop" (click)="closeDish()">
+        <div
+          class="modal-card"
+          [id]="'dish-dialog-' + dish.id"
+          role="dialog"
+          aria-modal="true"
+          [attr.aria-labelledby]="'dish-title-' + dish.id"
+          [attr.aria-describedby]="'dish-description-' + dish.id"
+          (click)="$event.stopPropagation()"
+        >
+          <button
+            #closeButton
+            class="modal-card__close"
+            type="button"
+            (click)="closeDish()"
+            aria-label="Закрити модальне вікно"
+          >
+            Закрити
+          </button>
+          <h3 [id]="'dish-title-' + dish.id">{{ dish.name }}</h3>
+          <p [id]="'dish-description-' + dish.id">{{ dish.fullDescription }}</p>
+          @if (dish.servingStyle) {
+            <p class="modal-card__serving">{{ dish.servingStyle }}</p>
+          }
+          <h4>Інгредієнти</h4>
+          <ul>
+            @for (item of dish.ingredients; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+          @if (dish.tastingNotes?.length) {
+            <h4>Дегустаційні акценти</h4>
+            <ul>
+              @for (item of dish.tastingNotes; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

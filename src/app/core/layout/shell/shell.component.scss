@@ -1,0 +1,23 @@
+.shell {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+}
+
+.shell__content {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.82), rgba(244, 238, 223, 0.95)),
+    radial-gradient(circle at top right, rgba(78, 117, 80, 0.08), transparent 24rem),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.14) 0,
+      rgba(255, 255, 255, 0.14) 2.6rem,
+      rgba(216, 205, 184, 0.08) 2.6rem,
+      rgba(216, 205, 184, 0.08) 2.66rem
+    );
+}

@@ -1,0 +1,10 @@
+.revenue-chart {
+  position: relative;
+  min-height: clamp(10rem, 22vh, 14rem);
+}
+
+@media (max-width: 860px) {
+  .revenue-chart {
+    min-height: 12rem;
+  }
+}

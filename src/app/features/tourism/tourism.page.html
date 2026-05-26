@@ -1,0 +1,54 @@
+<section class="section">
+  <div class="container">
+    <app-section-header
+      eyebrow="Теорія"
+      title="Гастротуризм як частина враження, а не лише споживання"
+      description="Тут теорія з курсової роботи перетворюється на структурований інтерфейс: без суцільного тексту й з чіткими змістовими блоками."
+    />
+
+    <div class="card-grid card-grid--3">
+      @for (section of sections; track section.id) {
+        <app-info-card
+          [title]="section.title"
+          [description]="section.description"
+          [image]="section.image"
+          [imageAlt]="section.imageAlt"
+          [icon]="section.icon"
+        />
+      }
+    </div>
+
+    <div class="tourism__visuals">
+      @for (visual of featuredVisuals; track visual.id) {
+        <article class="surface-card tourism__visual-card">
+          <img [src]="visual.image" [alt]="visual.imageAlt" loading="lazy" />
+          <div class="tourism__visual-copy">
+            <span class="tourism__visual-icon" aria-hidden="true">{{ visual.icon }}</span>
+            <h3>{{ visual.title }}</h3>
+            <p>{{ visual.points.join(' • ') }}</p>
+          </div>
+        </article>
+      }
+    </div>
+
+    <div class="tourism__categories">
+      @for (category of categories; track category.title) {
+        <article class="surface-card tourism__category">
+          <div class="tourism__category-head">
+            <span class="tourism__category-icon" aria-hidden="true">{{ category.icon }}</span>
+            <h3>{{ category.title }}</h3>
+          </div>
+          <ul>
+            @for (item of category.items; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+
+    <div class="tourism__accordion">
+      <app-accordion [items]="accordionItems" />
+    </div>
+  </div>
+</section>

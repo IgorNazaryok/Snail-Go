@@ -1,0 +1,23 @@
+<section class="section section--accent">
+  <div class="container">
+    <app-section-header
+      eyebrow="Ферми"
+      title="Картки фермерських локацій"
+      description="На цій сторінці зібрані ключові точки маршруту з коротким описом і переходом до детального перегляду."
+    />
+
+    <div class="card-grid card-grid--2">
+      @for (farm of farms; track farm.id) {
+        <app-info-card
+          [eyebrow]="farm.badge + ' · ' + farm.location"
+          [title]="farm.name"
+          [description]="farm.shortDescription"
+          [link]="'/farms/' + farm.id"
+          [image]="farm.image"
+          [imageAlt]="farm.imageAlt"
+          [icon]="farm.status === 'Діюча ферма' ? '⌂' : '✦'"
+        />
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,60 @@
+<section class="hero section section--plain">
+  <div class="container hero__grid">
+    <div>
+      <p class="hero__eyebrow">Інтерактивна курсова платформа</p>
+      <h1>Гастротуризм равликових ферм як ідея маршруту і малого бізнесу</h1>
+      <p class="hero__lead">
+        Snail Go перетворює матеріали курсової роботи на живу SPA-платформу: з маршрутами,
+        історіями ферм, дегустаційними стравами та бізнес-калькулятором.
+      </p>
+      <div class="hero__facts">
+        @for (fact of quickFacts; track fact.label) {
+          <article class="surface-card hero__fact-card">
+            <span class="hero__fact-icon" aria-hidden="true">{{ fact.icon }}</span>
+            <strong>{{ fact.value }}</strong>
+            <span>{{ fact.label }}</span>
+          </article>
+        }
+      </div>
+      <div class="hero__actions">
+        <a class="button button--primary" routerLink="/farms">Переглянути ферми</a>
+        <a class="button button--secondary" routerLink="/calculator">Відкрити калькулятор</a>
+      </div>
+    </div>
+
+    <aside class="hero__visual surface-card">
+      <img src="assets/illustrations/snail-hero.svg" alt="Головна ілюстрація про равликову ферму та гастротуризм" />
+      <div class="hero__visual-copy">
+        <p class="hero__note-label">Фокус проєкту</p>
+        <ul>
+          <li>незвичний туристичний досвід на діючій фермі та на моделі сімейного проєкту</li>
+          <li>прив’язка до реальних даних із курсової роботи та бізнес-проєкту</li>
+          <li>прикладний розрахунок життєздатності ферми з урахуванням дегустаційного напряму</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section section--accent">
+  <div class="container">
+    <app-section-header
+      eyebrow="Структура"
+      title="Що вже закладено в першу версію"
+      description="На першому етапі ми формуємо каркас застосунку й розкладаємо контент по окремих сторінках, щоб далі нарощувати інтерактивність без хаосу."
+    />
+
+    <div class="card-grid card-grid--3">
+      @for (item of highlights; track item.title) {
+        <app-info-card
+          [eyebrow]="item.eyebrow"
+          [title]="item.title"
+          [description]="item.description"
+          [image]="item.image"
+          [imageAlt]="item.imageAlt"
+          [icon]="item.icon"
+        />
+      }
+    </div>
+  </div>
+</section>

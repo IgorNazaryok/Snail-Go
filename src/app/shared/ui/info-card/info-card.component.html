@@ -1,0 +1,22 @@
+<article class="info-card">
+  @if (image()) {
+    <div class="info-card__media">
+      <img [src]="image()" [alt]="imageAlt()" loading="lazy" />
+    </div>
+  }
+
+  @if (eyebrow()) {
+    <p class="info-card__eyebrow">{{ eyebrow() }}</p>
+  }
+
+  @if (icon()) {
+    <span class="info-card__icon" aria-hidden="true">{{ icon() }}</span>
+  }
+
+  <h3>{{ title() }}</h3>
+  <p>{{ description() }}</p>
+
+  @if (link()) {
+    <a class="info-card__link" [routerLink]="link()">{{ linkLabel() }}</a>
+  }
+</article>

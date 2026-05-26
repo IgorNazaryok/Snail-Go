@@ -1,0 +1,129 @@
+<section class="section section--tight">
+  <div class="container calculator">
+    <div>
+      <p class="section-kicker">Калькулятор</p>
+      <h1>Модель доходу равликової ферми</h1>
+      <p class="calculator__lead">
+        Це не бухгалтерія, а робоча модель на основі бізнес-проєкту: орієнтовний урожай із площі,
+        дохід від продажу 2000-2500 кг за сезон на 10 сотках, а також виручка від туру вихідного дня
+        й дегустаційно-екскурсійного формату.
+      </p>
+
+      <form class="calculator-form" [formGroup]="form">
+        <label>
+          Площа, соток
+          <input type="number" formControlName="areaSotka" (blur)="getControl('areaSotka').markAsTouched()" />
+          @if (getControl('areaSotka').invalid && getControl('areaSotka').touched) {
+            <small>Вкажіть значення від 1 до 30 соток.</small>
+          }
+        </label>
+        <label>
+          Інвестиції, грн
+          <input type="number" formControlName="investment" (blur)="getControl('investment').markAsTouched()" />
+          @if (getControl('investment').invalid && getControl('investment').touched) {
+            <small>Інвестиції не можуть бути від'ємними.</small>
+          }
+        </label>
+        <label>
+          Ціна за кг, грн
+          <input type="number" formControlName="pricePerKg" (blur)="getControl('pricePerKg').markAsTouched()" />
+          @if (getControl('pricePerKg').invalid && getControl('pricePerKg').touched) {
+            <small>Вкажіть додатну ціну за кг.</small>
+          }
+        </label>
+        <label>
+          Витрати на місяць, грн
+          <input type="number" formControlName="monthlyExpenses" (blur)="getControl('monthlyExpenses').markAsTouched()" />
+          @if (getControl('monthlyExpenses').invalid && getControl('monthlyExpenses').touched) {
+            <small>Витрати не можуть бути від'ємними.</small>
+          }
+        </label>
+        <label>
+          Відвідувачі на місяць
+          <input type="number" formControlName="visitorsPerMonth" (blur)="getControl('visitorsPerMonth').markAsTouched()" />
+          @if (getControl('visitorsPerMonth').invalid && getControl('visitorsPerMonth').touched) {
+            <small>Вкажіть орієнтовну кількість гостей на місяць.</small>
+          }
+        </label>
+        <label>
+          Середній чек дегустації, грн
+          <input type="number" formControlName="avgTicket" (blur)="getControl('avgTicket').markAsTouched()" />
+          @if (getControl('avgTicket').invalid && getControl('avgTicket').touched) {
+            <small>Вкажіть суму для розрахункового чека.</small>
+          }
+        </label>
+      </form>
+
+      <div class="scenario-switcher">
+        @for (scenario of scenarios; track scenario.type) {
+          <button
+            type="button"
+            class="scenario-switcher__button"
+            [class.scenario-switcher__button--active]="selectedScenario().type === scenario.type"
+            (click)="selectedScenario.set(scenario)"
+          >
+            {{ scenario.label }}
+          </button>
+        }
+      </div>
+      <p class="scenario-description">{{ selectedScenario().description }}</p>
+    </div>
+
+    <div class="calculator__results">
+      <div class="stats-grid">
+        <article class="surface-card stat-card">
+          <span>Урожай за рік</span>
+          <strong>{{ result().annualYieldKg | number: '1.0-0' }} кг</strong>
+        </article>
+        <article class="surface-card stat-card">
+          <span>Річна виручка</span>
+          <strong>{{ result().annualRevenue | currency: 'UAH' : 'symbol' : '1.0-0' }}</strong>
+        </article>
+        <article class="surface-card stat-card">
+          <span>Дохід від продукції</span>
+          <strong>
+            {{ result().annualProductRevenue | currency: 'UAH' : 'symbol' : '1.0-0' }}
+          </strong>
+        </article>
+        <article class="surface-card stat-card">
+          <span>Туристичний дохід</span>
+          <strong>
+            {{ result().annualTourismRevenue | currency: 'UAH' : 'symbol' : '1.0-0' }}
+          </strong>
+        </article>
+        <article class="surface-card stat-card">
+          <span>Річний прибуток</span>
+          <strong>{{ result().annualProfit | currency: 'UAH' : 'symbol' : '1.0-0' }}</strong>
+        </article>
+        <article class="surface-card stat-card">
+          <span>Окупність</span>
+          <strong>
+            @if (result().paybackPeriodMonths !== null) {
+              {{ result().paybackPeriodMonths }} міс
+            } @else {
+              не визначено
+            }
+          </strong>
+        </article>
+      </div>
+
+      <div class="surface-card chart-panel">
+        <h2>Динаміка накопиченого прибутку</h2>
+        <p>
+          Графік показує рух за 24 місяці з урахуванням і продуктових надходжень, і туристичного напряму,
+          якщо ферма запускає прийом гостей паралельно з продажем продукції.
+        </p>
+        <app-revenue-chart [points]="result().monthlyCumulativeProfit" />
+      </div>
+
+      @if (form.invalid) {
+        <div class="calculator-warning">
+          <p>Заповніть поля коректними значеннями. Після цього модель одразу перерахує показники.</p>
+          <button type="button" class="button button--secondary" (click)="markAllAsTouched()">
+            Показати помилки
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</section>
