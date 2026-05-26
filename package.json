@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:gh-pages": "ng build --configuration production --base-href \"/Snail-Go/\"",
+    "deploy:gh-pages": "npx angular-cli-ghpages --dir=dist/Snail-Go/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:Snail-Go": "node dist/Snail-Go/server/server.mjs"
